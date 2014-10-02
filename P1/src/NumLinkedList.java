@@ -33,30 +33,33 @@ public class NumLinkedList implements NumList {
 	private Node head;
 	private int length;
 	public NumLinkedList() { 				//Constructor for NumLinkedList
-		head = new Node(); 					//Creates head
-		length = 0; 						//Used to track size of List
+		head = new Node(); 					
+		length = 0; 						
 	}
 	public int size() {						//Returns no. of items in list
 		return length;
 	}
 	public void add(double value) {			//Adds an item (Node) to end of list	
-		Node current = head;				//Spelled it "currrent", took me too
-		while(current.getNext() != null) { 	//long to find this issue...
+		Node current = head;				
+		while(current.getNext() != null) { 	
 			current = current.getNext();	//Goes to end of list
 		}
-		current.setNext(new Node(value));	//Sets next for last value, "adding" 
-		length++;							//the desired value to the list
+		current.setNext(new Node(value));//Sets next for last value
+		length++;
 	}									
 	public void insert(int i, double value){//Inserts Node into List
-		if(i >= length) add(value);			//If list is too small, add at end	
-		Node current = head;			
-		for(int j = 0; j < i; j++) {		//Same as add method, but stops at location, not end
-			current = current.getNext();
+		if(i >= length) add(value); //If list is too small, add at end	
+		else {
+			Node current = head;			
+			for(int j = 0; j < i; j++) {		//Same as add method, but stops at location, not end
+				current = current.getNext();
+			}
+			Node temp = new Node(value, current.getNext()); //Inserts node with desired value & pointer
+			current.setNext(temp);
+			length++;
 		}
-		Node temp = new Node(value, current.getNext()); //Inserts node with desired value & pointer
-		current.setNext(temp);				//Changes next of preceding value
 	}
-	public void remove(int i) {				//Removes Node form List
+	public void remove(int i) {				//Removes Node from List
 		if(i >= length) return;				//Checks if Node to be removed is there
 		Node current = head;				
 		for(int j = 0; j < i; j++) {		//Moves to one before Node we want to remove
@@ -65,7 +68,7 @@ public class NumLinkedList implements NumList {
 		current.setNext(current.getNext().getNext());//to "one after node"
 		length--;							//Changes length of List
 	}
-	public double lookup(int i) {
+	public double lookup(int i) {			//returns value at specific index
 		if(i + 1 > length) throw new IllegalArgumentException("Index out of bounds");
 		Node current = head;			
 		for(int j = 0; j <= i; j++) {
@@ -73,37 +76,47 @@ public class NumLinkedList implements NumList {
 		}
 		return current.getDbl();
 	}
-	public boolean contains(double value) {
-		Node current = head;
-		for(int i = 0; i < length; ) {
+	public boolean contains(double value) { //returns true if list contains specific value
+		Node current = head;				//false if it does not contain value
+		for(int i = 0; i < length; i++) {
 			current = current.getNext();
 			if(value == current.getDbl()) return true;
 		}
 		return false;
 	}
-	public boolean equals(NumList otherList) {
+	public boolean equals(NumList otherList) {//true/false if lists are same/NOTsame respectively
+		if(length != otherList.size()) return false; //Different size means NOT the same
 		Node current = head;
-		for(int i = 0; i < length; ) {
+		for(int i = 0; i < otherList.size(); i++) {
 			current = current.getNext();
+			System.out.println(current.getDbl() + " vs " + otherList.lookup(i));
 			if(otherList.lookup(i) != current.getDbl()) return false;
 		}
 		return true;	
 	}
-	public void removeDuplicates() {
-		Node A = head;
-		Node B = head;
-		for(int i = 0; i < length; i++) {
-			A = A.getNext();
-			for(int j = i+1; j < length; j++) {
-				B = B.getNext();
-				if(A == B) {
-					remove(j);
-					length--;
+	public void removeDuplicates() { //Removes duplicate values from list
+		if(length == 0) return; //if list is size zero, there is nothing to remove
+		Node base = head;
+		Node comp = head;
+		 Node prevcomp;
+		while(base != null) {
+			prevcomp = comp;
+			comp = base.getNext(); // resets comp and prevcomp every outer loop
+			while(comp != null) {
+				if(base.getDbl() == comp.getDbl()) {
+					prevcomp.setNext(comp.getNext());
+					comp = comp.getNext();
+					length--;//adjust length of list b/c we removed
+				}
+				else {
+					prevcomp = comp; //moves to next node
+					comp = comp.getNext();
 				}
 			}
+			base = base.getNext();
 		}
 	}
-	public String toString() {
+	public String toString() { //returns String version of list
 		String result = "";
 		Node current = head;
 		if(current.getNext() != null) {
