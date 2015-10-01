@@ -1,0 +1,38 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 I used the Adventures of Huckleberry Finn by Mark Twain for testing purposes as I really enjoyed this book when I was little.\
+\
+mostCommonCollocs(10, \'93Huck\'94, 1) returns the top ten right collocations of the word \'93Huck\'94\
+\
+finn, and, but, well, i, no, takes, stealing, creeps, the\
+\
+Aside from his name (finn),  the other words are primarily basic English \'91link\'92 words like i, the, and and. This was expected, so I ran the test again using exceptions in the form of a lot of basic words.\
+\
+mostCommonCollocs(10, \'93Huck\'94, 1, new String[] 
+\fs22 \{"I","and","the","a","but","no","well","its", "what", "it\'94\})\
+\
+return top 10 collocations without the words in the array exceptions\
+\
+finn, takes, stealing, creeps, aen, decided, loses, finds, explains, parting\
+\
+\'93aen\'94 is most likely due to the poor grammar that is accredited to some parts of the novel (individuals who don\'92t have an extensive knowledge of the english language as in Jim).\
+\
+mostCommonWords(10) returns the top ten words in the novel\
+\
+and, the, a ,to, i, it, was, of, he, in\
+\
+This result is to be expected as these words are all standard to traditional English writings.\
+\
+mostCommonWordPairs(10) returns top ten word pairs in the novel\
+\
+in the, of the, and the, it was, and i, i was, and then, to the, on the, out of\
+\
+Again, the common word pairs are filled with common English base words such as the and i.\
+\
+The wordRank() and wordPairRank() methods calculated \'93Huck\'94 and \'93Huck Finn\'94 respectively. \'93Huck\'94 was ranked 189. \'93Huck Finn\'94 was ranked 751.
+\fs24 \
+}
