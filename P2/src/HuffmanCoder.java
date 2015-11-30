@@ -1,6 +1,4 @@
 
-
-
 public class HuffmanCoder {
 
 	String inputFile;
@@ -18,7 +16,7 @@ public class HuffmanCoder {
 			output = new BinaryWriter(outputFile);
 		} catch(Exception FileNotFoundException) {throw new IllegalArgumentException("PATH UNAVAILABLE");}
 		try{
-		for(byte b : HuffTree.listORIGINAL.order) {
+		for(byte b : HuffTree.source) { //Goes through every byte in order for compression
 		output.writeBinaryArray(HuffTree.code(b));
 		}
 		output.close();

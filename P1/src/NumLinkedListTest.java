@@ -1,9 +1,5 @@
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-//WAS A VERY AWKWARD TEST CLASS TO WRITE... Linked Lists were hard to create
-//as in they needed add or insert methods as well, so I ended up testing add
-//until I knew it was solid, and then used add for the rest.
 public class NumLinkedListTest {
 
     @Test

@@ -6,17 +6,19 @@ import org.junit.Test;
 
 
 public class HuffmanCoderTest {
-	//NOT MUCH TO CHECK...
+
+	//Not much to test here.
+	
 	@Test
 	public void testConstructor() throws IOException{
-    	HuffmanCoder hc = new HuffmanCoder("/Users/aetryjan/file.txt", "/Users/aetryjan/output.txt");
+    	HuffmanCoder hc = new HuffmanCoder("file.txt", "output.txt");
     	assertTrue("The constructor makes a HuffmanCode using byte array",
 			true);
 	}
 	
 	@Test
 	public void testCompressMethod() throws IOException{
-    	HuffmanCoder hc = new HuffmanCoder("/Users/aetryjan/file.txt", "/Users/aetryjan/output.txt");
+    	HuffmanCoder hc = new HuffmanCoder("file.txt", "output.txt");
     	hc.compress();
     	assertTrue("The constructor make a HuffmanCode using byte array",
 			true);

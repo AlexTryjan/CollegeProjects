@@ -1,122 +1,134 @@
 
-public class NumLinkedList implements NumList {
-	//Node "Class-ception"
+public class NumLinkedList implements NumList{
+	/*START NODE CLASS*/
 	public class Node {
 		private Node next;
 		private double dbl;
-		public Node() {						//Creates node without value
-			next = null;					//use: head for List
-		}
-		public Node(double dbl) {			//Creates Node with value & null pointer
-			this.dbl = dbl;					//use: adding
+		public Node() {
 			next = null;
 		}
-		public Node(double dbl, Node next) {//Creates Node with value and pointer
-			this.dbl = dbl;					//use: inserting
+		public Node(double dbl) {
+			this.dbl = dbl;
+			next = null;
+		}
+		public Node(double dbl, Node next) {
+			this.dbl = dbl;
 			this.next = next;
 		}
-		public double getDbl() {			//Returns value of Node
+		public double getDbl() {
 			return dbl;
 		}
-		public void setDbl(double dbl) {	//Sets the value for Node
+		public void setDbl(double dbl) {
 			this.dbl = dbl;
 		}
-		public Node getNext() {				//Gets the next item in List
+		public Node getNext() {
 			return next;
 		}
-		public void setNext(Node next) { 	//Sets 'next'(pointer) for a Node 
-			this.next = next;				//use: adding & inserting
+		public void setNext(Node next) { 
+			this.next = next;
 		}
 	}
-	//End of Node Class
-	//"Start" of NumLinkedList
+	/*END NODE CLASS*/
 	private Node head;
 	private int length;
-	public NumLinkedList() { 				//Constructor for NumLinkedList
+	public NumLinkedList() {
 		head = new Node(); 					
 		length = 0; 						
 	}
-	public int size() {						//Returns no. of items in list
+	public int size() {
 		return length;
 	}
-	public void add(double value) {			//Adds an item (Node) to end of list	
+	
+	//puts new node with requested value at end of list
+	public void add(double value) {	
 		Node current = head;				
 		while(current.getNext() != null) { 	
-			current = current.getNext();	//Goes to end of list
+			current = current.getNext();
 		}
-		current.setNext(new Node(value));//Sets next for last value
+		current.setNext(new Node(value));
 		length++;
-	}									
-	public void insert(int i, double value){//Inserts Node into List
-		if(i >= length) add(value); //If list is too small, add at end	
+	}					
+	
+	//puts new node with requested value before the 'i'th node in the list
+	public void insert(int i, double value){
+		if(i >= length) add(value);	
 		else {
 			Node current = head;			
-			for(int j = 0; j < i; j++) {		//Same as add method, but stops at location, not end
+			for(int j = 0; j < i; j++) {
 				current = current.getNext();
 			}
-			Node temp = new Node(value, current.getNext()); //Inserts node with desired value & pointer
+			Node temp = new Node(value, current.getNext());
 			current.setNext(temp);
 			length++;
 		}
 	}
-	public void remove(int i) {				//Removes Node from List
-		if(i >= length) return;				//Checks if Node to be removed is there
+	
+	//removes node at 'i'th position from list
+	public void remove(int i) {
+		if(i >= length) return;
 		Node current = head;				
-		for(int j = 0; j < i; j++) {		//Moves to one before Node we want to remove
-			current = current.getNext();
-		}									//Changes pointer of "one before node"
-		current.setNext(current.getNext().getNext());//to "one after node"
-		length--;							//Changes length of List
-	}
-	public double lookup(int i) {			//returns value at specific index
-		if(i + 1 > length) throw new IllegalArgumentException("Index out of bounds");
-		Node current = head;			
-		for(int j = 0; j <= i; j++) {
+		for(int j = 0; j < i; j++) {
 			current = current.getNext();
 		}
-		return current.getDbl();
+		current.setNext(current.getNext().getNext());
+		length--;
 	}
-	public boolean contains(double value) { //returns true if list contains specific value
-		Node current = head;				//false if it does not contain value
+	
+	//Returns true if list contains a node with the requested value, false otherwise
+	public boolean contains(double value) {
+		Node current = head;
 		for(int i = 0; i < length; i++) {
 			current = current.getNext();
 			if(value == current.getDbl()) return true;
 		}
 		return false;
 	}
-	public boolean equals(NumList otherList) {//true/false if lists are same/NOTsame respectively
-		if(length != otherList.size()) return false; //Different size means NOT the same
+	
+	//returns value of node at position i in list, throws exception if the position i is non-existant
+	public double lookup(int i) {
+		if(length < i+1) throw new IllegalArgumentException("Index out of bounds");
+		Node current = head;			
+		for(int j = 0; j <= i; j++) {
+			current = current.getNext();
+		}
+		return current.getDbl();
+	}
+	
+	public boolean equals(NumList otherList) {
+		if(length != otherList.size()) return false;
 		Node current = head;
 		for(int i = 0; i < otherList.size(); i++) {
 			current = current.getNext();
-			System.out.println(current.getDbl() + " vs " + otherList.lookup(i));
 			if(otherList.lookup(i) != current.getDbl()) return false;
 		}
 		return true;	
 	}
-	public void removeDuplicates() { //Removes duplicate values from list
-		if(length == 0) return; //if list is size zero, there is nothing to remove
+	
+	//Removes any duplicate values from the list so that all values are unique
+	public void removeDuplicates() {
+		if(length == 0) return;
 		Node base = head;
 		Node comp = head;
 		 Node prevcomp;
 		while(base != null) {
 			prevcomp = comp;
-			comp = base.getNext(); // resets comp and prevcomp every outer loop
+			comp = base.getNext();
 			while(comp != null) {
 				if(base.getDbl() == comp.getDbl()) {
 					prevcomp.setNext(comp.getNext());
 					comp = comp.getNext();
-					length--;//adjust length of list b/c we removed
+					length--;
 				}
 				else {
-					prevcomp = comp; //moves to next node
+					prevcomp = comp;
 					comp = comp.getNext();
 				}
 			}
 			base = base.getNext();
 		}
 	}
-	public String toString() { //returns String version of list
+	
+	public String toString() {
 		String result = "";
 		Node current = head;
 		if(current.getNext() != null) {

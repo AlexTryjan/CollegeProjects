@@ -1,6 +1,4 @@
-
 public interface NumList {
-
 	int size() ;
 	void add(double value) ;
 	void insert(int i, double value) ;

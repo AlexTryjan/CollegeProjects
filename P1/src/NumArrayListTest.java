@@ -7,20 +7,17 @@ public class NumArrayListTest {
     @Test
     public void testDefaultConstructorAndToString() {
         NumArrayList list = new NumArrayList();     
-        assertEquals("With no parameters, your constructors should initialize an list size 0. " + 
-            "It also can be the problem in method TOSTRING.", 
+        assertEquals("Initialize list of size 0", 
             "", list.toString());
     }
     
     @Test
     public void testUserInitializedConstructorAndToString() {
         NumArrayList list = new NumArrayList(14);     
-        assertEquals("With an 'int' parameters, constructor should initialize a list size 'int'. " + 
-        		"It also can be the problem in method TOSTRING.", 
-        		"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0", list.toString());
+        assertEquals("initialize list of size int", 
+        		"", list.toString());
         NumArrayList empty = new NumArrayList(0);
-        assertEquals("With an 'int' parameters, constructor should initialize a list size 'int'. " + 
-        		"It also can be the problem in method TOSTRING.", 
+        assertEquals("initialize list of size int where int = 0", 
         		"", empty.toString());
     }
 
@@ -68,6 +65,22 @@ public class NumArrayListTest {
     }
     
     @Test
+    public void testInsertStart() {
+    	double[] var = {};
+    	NumArrayList list = new NumArrayList(var);
+    	list.insert(0, 3.0);
+    	assertEquals("insert element at first index.",
+                "3.0", 
+               	list.toString());
+    	
+    	NumArrayList list2 = new NumArrayList();
+    	list2.insert(56565, 3.0);
+    	assertEquals("insert element at first index.",
+                "3.0", 
+               	list2.toString());
+    }
+    
+    @Test
     public void testInsertAndToString() {
     	NumArrayList list = new NumArrayList(0);
     	list.insert(2, 3.0);
@@ -79,19 +92,82 @@ public class NumArrayListTest {
     	assertEquals("Adds elements before desired index.",
                 "2.5 6.0 4.0 1.0 3.0 7.0", 
                	list.toString());
+    	list.remove(1);
+    	list.insert(1, 6.0);
+    	assertEquals("removing and inserting same thing won't change result",
+                "2.5 6.0 4.0 1.0 3.0 7.0", 
+               	list.toString());
+    	list.insert(3, 7.7);
+    	assertEquals("inserting in middle works",
+                "2.5 6.0 4.0 7.7 1.0 3.0 7.0", 
+               	list.toString());
+    	list.remove(4);
+    	assertEquals("Confirming succesful removal",
+                "2.5 6.0 4.0 7.7 3.0 7.0", 
+               	list.toString());
+    	list.insert(6, 6.7);
+    	assertEquals("inserting at end works",
+                "2.5 6.0 4.0 7.7 3.0 7.0 6.7", 
+               	list.toString());
+    }
+    
+    @Test
+    public void testRemoveStart() {
+    	double[] var = {2.0, 3.0, 5.0, 6.6, 7.9};
+    	NumArrayList list = new NumArrayList(var);
+    	list.remove(0);
+    	assertEquals("Removes element at first index.",
+                "3.0 5.0 6.6 7.9", 
+               	list.toString());
+    }
+    
+    @Test
+    public void testRemoveMiddle() {
+    	NumArrayList list = new NumArrayList();
+    	list.insert(0, 2.0);
+    	list.add(3.0);
+    	list.add(5.0);
+    	list.add(6.6);
+    	list.add(7.9);
+    	list.remove(2);
+    	assertEquals("Removes element at first index.",
+                "2.0 3.0 6.6 7.9", 
+               	list.toString());
+    }
+    
+    @Test
+    public void testRemoveEnd() {
+    	NumArrayList list = new NumArrayList(7);
+    	list.insert(0, 2.0);
+    	list.add(3.0);
+    	list.add(5.0);
+    	list.add(6.6);
+    	list.add(7.9);
+    	list.remove(4);
+    	assertEquals("Removes element at first index.",
+                "2.0 3.0 5.0 6.6", 
+               	list.toString());
     }
     
     @Test
     public void testRemoveAndToString() {
-    	double[] var = {2.0, 3.0, 5.0, 7.9};
+    	double[] var = {2.0, 3.0, 5.0, 6.6, 7.9};
     	NumArrayList list = new NumArrayList(var);
     	list.remove(3);
-    	assertEquals("Removes element at desired index.",
+    	assertEquals("Removes element at middle index.",
+                "2.0 3.0 5.0 7.9", 
+               	list.toString());
+    	list.remove(3);
+    	assertEquals("Removes element at end index.",
                 "2.0 3.0 5.0", 
                	list.toString());
     	list.remove(17);
     	assertEquals("Removing index that is not present results in no change",
                 "2.0 3.0 5.0", 
+               	list.toString());
+    	list.remove(0);
+    	assertEquals("Removing index in front of list",
+                "3.0 5.0", 
                	list.toString());
     }
     
@@ -154,5 +230,11 @@ public class NumArrayListTest {
     	assertEquals("Removes Duplicates in list",
                 "2.0 3.0 5.0", 
                	list.toString());
+    	double[] var2 = {2.0, 3.0, 5.0, 3.0, 5.0, 3.0, 4.0};
+    	NumArrayList list2 = new NumArrayList(var2);
+    	list2.removeDuplicates();
+    	assertEquals("Removes Duplicates in list",
+                "2.0 3.0 5.0 4.0", 
+               	list2.toString());
 	}
 }

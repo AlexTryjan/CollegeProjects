@@ -6,6 +6,26 @@ import org.junit.Test;
 
 
 public class HuffmanCodeTest {
+
+	@Test
+	public void testHuffmanConstructor() {
+		byte[] input = {'z','e','l','l','o'};
+		HuffmanCode test = new HuffmanCode(input);
+		boolean[] location = test.code((byte)'e');
+		System.out.println(test.toString());
+		System.out.println("done");
+	}
+	
+	@Test
+	public void testHuffmanStringConstructorAndCodeToString() {
+		HuffmanCode test = new HuffmanCode("file.txt");
+		System.out.println(test.toString());
+		System.out.println("done");
+	}
+	
+	//Used Eclipse's Debug function to step through code at this above part to ensure that the trees
+	//are in the right order. The System.out.printlns where locations for breakpoints in my code.
+	//Below are the generic tests
 	
 	@Test
 	public void testToStringMethod() {
@@ -27,8 +47,8 @@ public class HuffmanCodeTest {
 	@Test
 	public void testStringArgumentConstructorAndToString() throws IOException {
 		System.out.println("B");
-    	HuffmanCode hc = new HuffmanCode("/Users/aetryjan/file.txt");
-    	assertEquals("108: 10\n111: 111\n32: 1100\n100: 1101\n101: 010\n104: 011\n114: 000\n119: 001",hc.toString());
+    	HuffmanCode hc = new HuffmanCode("file.txt");
+    	assertEquals("97: 0\n98: 11\n99: 101\n10: 100",hc.toString());
 	}
 	
 	@Test

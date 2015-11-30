@@ -1,83 +1,56 @@
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class HuffmanList {
 
-	private LinkedList<HuffmanNode> list = new LinkedList<HuffmanNode>();
-	public byte[] orderInc;
-	public byte[] orderDec;
-	public byte[] order;
-	
+public class HuffmanList{
+
+	private LinkedList<HuffmanNode> list;
+	byte[] source;
+	byte[] orderDec;
 	public HuffmanList(byte[] input) {
-		ByteCounter counter = new ByteCounter(input);
-		order = counter.read;
-		counter.setOrder("countDec");
-		orderDec = counter.getElements();
-		counter.setOrder("countInc");
-		orderInc = counter.getElements();
-		for(byte b: orderInc)
-			list.add(new HuffmanNode(counter.getCount(b),b));
+		ByteCounter ordersInput = new ByteCounter(input);
+		source = ordersInput.inputList;
+		ordersInput.setOrder("countDec");
+		orderDec = ordersInput.getElements(); //helps us with HuffmanCoder functions (probably a better way to do so)
+		ordersInput.setOrder("countInc");
+		ordersInput.getElements();
+		list = ordersInput.inputLL;
 	}
-	
-	public HuffmanList(String input) {
-		ByteCounter counter = new ByteCounter(input);
-		order = counter.read;
-		counter.setOrder("countDec");
-		orderDec = counter.getElements();
-		counter.setOrder("countInc");
-		orderInc = counter.getElements();
-		for(byte b: orderInc)
-			list.add(new HuffmanNode(counter.getCount(b),b));
+	public HuffmanList(String fileInput) {
+		ByteCounter ordersInput = new ByteCounter(fileInput);
+		source = ordersInput.inputList;
+		ordersInput.setOrder("countDec");//helps us with HuffmanCoder functions (probably a better way to do so)
+		orderDec = ordersInput.getElements();
+		ordersInput.setOrder("countInc");
+		ordersInput.getElements();
+		list = ordersInput.inputLL;
 	}
-	
-	public HuffmanList(byte[] input, int[] counts) {
-		for(int i = 0; i < counts.length; i++) {
-			if(counts[i] < 0) throw new IllegalArgumentException("NEGATIVE COUNTS");
+	public HuffmanList(byte[] b, int[] counts) {
+		int totalByteCount = 0;
+		int currentPos = 0;
+		for(int i = 0; i < counts.length; i++)
+			totalByteCount += counts[i];
+		byte[] allBytes = new byte[totalByteCount];
+		for(int i = 0; i < b.length; i++){
+			if(counts[i] < 0) throw new IllegalArgumentException("NEGATIVES DETECTED");
+			for (int j = 0; j < counts[i]; j++) {
+				allBytes[currentPos] = b[i];
+				currentPos++;
+			}
 		}
-		ByteCounter counter = new ByteCounter(input);
-		order = counter.read;
-		if(input.length != counts.length) throw new IllegalArgumentException("SIZE MISMATCH");
-		orderInc = counter.getElements();
-		orderDec = counter.getElements();
-		if(orderInc.length != input.length) throw new IllegalArgumentException("DUPLICATES DETECTED");
-		for(int i = 0; i < input.length; i++)
-			list.add(new HuffmanNode(counts[i],input[i]));
-		
-		Collections.sort(list, new Comparator<HuffmanNode>() {
-				//SORTS FROM BIGGEST TO SMALLEST COUNTS
-			@Override
-			public int compare(HuffmanNode o1, HuffmanNode o2) {
-				if(o2.count < o1.count) return -1;
-				else if(o2.count == o1.count)
-					if(o2.b > o1.b) return -1;
-					else return 1;
-				else return 1;
-			}}
-		);
-		for(int i = 0; i < list.size(); i++)//CHANGES BIG TO SMALL COUNTS TO ARRAY
-			orderDec[i] = list.get(i).b;
-		Collections.sort(list);//SORTS FROM SMALLEST TO BIGGEST COUNTS
-		for(int i = 0; i < list.size(); i++)//CHANGES BIG TO SMALL COUNTS TO ARRAY
-			orderInc[i] = list.get(i).b;
-		Collections.sort(list, new Comparator<HuffmanNode>() {
-			//SORTS FROM BIGGEST TO SMALLEST COUNTS
-		@Override
-		public int compare(HuffmanNode o1, HuffmanNode o2) {
-			if(o2.count < o1.count) return 1;
-			else if(o2.count == o1.count)
-				if(o2.b > o1.b) return -1;
-				else return 1;
-			else return -1;
-		}}
-	);
+		ByteCounter ordersInput = new ByteCounter(allBytes);
+		ordersInput.setOrder("countDec");
+		orderDec = ordersInput.getElements();//Don't need source for this constructor as it doesn't exist
+		ordersInput.setOrder("countInc");
+		ordersInput.getElements();
+		list = ordersInput.inputLL;
+		if(list.size() != b.length) throw new IllegalArgumentException("DUPLICATES DETECTED");
 	}
-	
 	public ListIterator<HuffmanNode> iterator() {
 		ListIterator<HuffmanNode> itr = list.listIterator(0);
-        return itr;
+        return itr; 
 	}
-	
-	public LinkedList<HuffmanNode> getList() {return list;}//ACCESSOR FOR list
+	public LinkedList<HuffmanNode> getList() {
+		return list; //Helper method to get list for other code
+	}
 }

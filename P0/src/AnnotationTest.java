@@ -39,7 +39,7 @@ public class AnnotationTest {
 	@Test
 	public void testAnnotateList() {
 		assertEquals("Method should return String with 'Buzz' if # div. by 5 and 'Fizz' if # div. by 3. 'FizzBuzz' if both.",
-		        "2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz Fizz 22 23 Fizz Buzz", Annotation.annotateList(2,25));
+		        "1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16", Annotation.annotateList(1,16));
 	}
 
 }
